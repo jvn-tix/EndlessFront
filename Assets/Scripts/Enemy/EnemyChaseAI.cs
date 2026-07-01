@@ -8,10 +8,12 @@ public class EnemyChaseAI : MonoBehaviour
 
     private Transform playerTransform;
     private Rigidbody2D rb;
+    private Animator animator;
 
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
     }
 
     void Start()
@@ -35,6 +37,7 @@ public class EnemyChaseAI : MonoBehaviour
         if (distanceToPlayer > stoppingDistance)
         {
             rb.linearVelocity = new Vector2(direction.x * moveSpeed, rb.linearVelocity.y);
+            animator.SetFloat("xVelocity", Mathf.Abs(rb.linearVelocity.x));
         }
         // 2. Jika sudah DEKAT -> BERHENTI
         else

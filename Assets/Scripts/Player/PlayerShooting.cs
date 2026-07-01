@@ -15,6 +15,7 @@ public class PlayerShooting : MonoBehaviour
 
     private Coroutine shootCoroutine;
     private IObjectPool<GameObject> bulletPool; // Variabel penampung pool
+    private Animator animator;
 
     void Awake()
     {
@@ -28,6 +29,11 @@ public class PlayerShooting : MonoBehaviour
             defaultCapacity: 20,               // Kapasitas awal pool
             maxSize: 50                        // Batas maksimum objek di dalam pool
         );
+    }
+
+    void Start()
+    {
+        animator = GetComponentInParent<Animator>();
     }
 
     private GameObject CreateBullet()
@@ -94,14 +100,28 @@ public class PlayerShooting : MonoBehaviour
 
     private void Shoot()
     {
-        if (bulletPrefab == null || firePoint == null) return;
+        if (bulletPrefab == null) return;
 
+        if(animator != null)
+        {   
+            Debug.Log("Triggering shoot animation");
+            animator.SetTrigger("shoot");
+        }
+
+        PlayerMovement playerMovement = GetComponent<PlayerMovement>();
+        float facingDirection = 1f;
+        if(playerMovement != null)
+        {
+            facingDirection = playerMovement.isFacingRight ? 1f : -1f;
+        }
         // Ambil peluru dari pool (bukan Instantiate baru)
         GameObject bullet = bulletPool.Get();
 
+        Vector3 spawnPosition = new Vector3(transform.position.x, transform.position.y + 0.2f, transform.position.z);
+
         // Pindahkan posisi dan rotasinya ke laras senjata
-        bullet.transform.position = firePoint.position;
-        bullet.transform.rotation = firePoint.rotation;
+        bullet.transform.position = spawnPosition;
+        bullet.transform.rotation = Quaternion.identity;
 
         Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
         if (rb != null)

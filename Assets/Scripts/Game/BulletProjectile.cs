@@ -9,6 +9,9 @@ public class BulletProjectile : MonoBehaviour
     private Rigidbody2D rb;
     private SpriteRenderer spriteRenderer;
 
+    // PENGAMAN UTAMA: Palang pintu agar tidak rilis 2 kali
+    private bool isReleased;
+
     [Header("Pengaturan Warna Peluru")]
     public Color playerBulletColor = Color.yellow;
     public Color enemyBulletColor = Color.red;
@@ -16,7 +19,7 @@ public class BulletProjectile : MonoBehaviour
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
-        spriteRenderer = GetComponent<SpriteRenderer>(); // Perbaikan: langsung ambil dari gameObject
+        spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     public void SetPool(IObjectPool<GameObject> bulletPool)
@@ -27,15 +30,14 @@ public class BulletProjectile : MonoBehaviour
     void OnEnable()
     {
         timer = lifetime;
-        // Perbaikan: Menghapus tanda kurung berlebih pada nameof
+        isReleased = false; // Reset status setiap kali peluru keluar dari pool
         Invoke(nameof(SetupVisual), 0.01f);
     }
 
     private void SetupVisual()
     {
-        if (spriteRenderer == null) return; // Perbaikan logika: jika null, keluar fungsi agar tidak error
+        if (spriteRenderer == null) return;
 
-        // Perbaikan: C# sensitif huruf besar, harus CompareTag (C besar)
         if (gameObject.CompareTag("EnemyBullet"))
         {
             spriteRenderer.color = enemyBulletColor;
@@ -51,7 +53,6 @@ public class BulletProjectile : MonoBehaviour
         timer -= Time.deltaTime;
         if (timer <= 0f)
         {
-            // Reset dulu sebelum dikembalikan lewat timer waktu habis
             ResetAndRelease();
         }
     }
@@ -69,6 +70,7 @@ public class BulletProjectile : MonoBehaviour
                     enemy.TakeDamage(1);
                 }
                 ResetAndRelease();
+                return; // Langsung keluar fungsi jika sudah rilis
             }
         }
         // 2. LOGIKA JIKA INI PELURU MUSUH
@@ -82,10 +84,11 @@ public class BulletProjectile : MonoBehaviour
                     playerHealth.PlayerTakeDamage(1);
                 }
                 ResetAndRelease();
+                return; // Langsung keluar fungsi jika sudah rilis
             }
         }
 
-        // 3. LOGIKA JIKA MENABRAK TANAH/DINDING (Berlaku untuk semua peluru)
+        // 3. LOGIKA JIKA MENABRAK TANAH/DINDING (Gunakan 'else if' atau amankan dengan return di atas)
         if (collision.CompareTag("Ground"))
         {
             ResetAndRelease();
@@ -94,9 +97,13 @@ public class BulletProjectile : MonoBehaviour
 
     private void ResetAndRelease()
     {
-        CancelInvoke(); // Batalkan Invoke warna agar tidak berjalan saat peluru sudah di pool
+        // KEAMANAN GANDA: Jika palang pintu sudah tertutup, abaikan perintah rilis berikutnya
+        if (isReleased) return;
+        isReleased = true;
 
-        // Kembalikan Tag peluru ke default "Bullet" sebelum masuk gudang pool
+        CancelInvoke(); // Batalkan Invoke warna
+
+        // Kembalikan Tag peluru ke default sebelum masuk pool
         gameObject.tag = "Bullet";
 
         if (rb != null) rb.linearVelocity = Vector2.zero;
@@ -104,6 +111,10 @@ public class BulletProjectile : MonoBehaviour
         if (pool != null)
         {
             pool.Release(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
         }
     }
 }
