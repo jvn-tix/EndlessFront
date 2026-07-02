@@ -15,6 +15,8 @@ public class PlayerHealth : MonoBehaviour
     private SpriteRenderer spriteRenderer;
     private Color originalColor;
 
+    public GameObject gameOverPanel;
+
     void Awake()
     {
         // Ambil SpriteRenderer dari objek Player
@@ -28,6 +30,11 @@ public class PlayerHealth : MonoBehaviour
         if (spriteRenderer != null)
         {
             originalColor = spriteRenderer.color;
+        }
+
+        if(gameOverPanel != null)
+        {
+            gameOverPanel.SetActive(false);
         }
     }
 
@@ -58,7 +65,12 @@ public class PlayerHealth : MonoBehaviour
 
     private void PlayerDie()
     {
-        Debug.Log("Player telah mati! Game Over.");
+        if(gameOverPanel != null)
+        {
+            gameOverPanel.SetActive(true);
+        }
+
+        Time.timeScale = 0f;
         gameObject.SetActive(false);
     }
 }
