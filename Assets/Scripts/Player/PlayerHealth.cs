@@ -4,8 +4,10 @@ using UnityEngine;
 public class PlayerHealth : MonoBehaviour
 {
     [Header("Pengaturan Darah")]
-    public int maxHealth = 5;
+    public int maxHealth = 3;
     private int currentHealth;
+
+    public HealthUI healthUI;
 
     [Header("Visual Efek Hit")]
     public Color hitColor = Color.red;
@@ -22,6 +24,7 @@ public class PlayerHealth : MonoBehaviour
     void Start()
     {
         currentHealth = maxHealth;
+        healthUI.setMaxHearts(maxHealth);
         if (spriteRenderer != null)
         {
             originalColor = spriteRenderer.color;
@@ -32,6 +35,7 @@ public class PlayerHealth : MonoBehaviour
     {
         currentHealth -= damage;
         Debug.Log($"Player terkena damage! Sisa darah: {currentHealth}");
+        healthUI.updateHearts(currentHealth);
 
         // Jalankan efek berkedip merah
         if (spriteRenderer != null)
