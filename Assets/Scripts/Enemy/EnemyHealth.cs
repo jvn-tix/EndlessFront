@@ -1,6 +1,6 @@
 using System.Collections;
 using UnityEngine;
-using UnityEngine.Pool; // Wajib ditambahkan
+using UnityEngine.SceneManagement;
 
 public class EnemyHealth : MonoBehaviour
 {
@@ -12,37 +12,24 @@ public class EnemyHealth : MonoBehaviour
     public Color hitColor = Color.red;
     public float flashDuration = 0.15f;
     private SpriteRenderer spriteRenderer;
-    private Color originalColor = Color.lightBlue;
-
-    // Referensi ke pool yang melahirkannya
-    private IObjectPool<GameObject> myPool;
+    private Color originalColor = Color.white; // Ganti default ke White agar warna asli sprite tidak berubah di awal
 
     void Awake()
     {
         spriteRenderer = GetComponentInChildren<SpriteRenderer>();
     }
 
-    // Fungsi untuk mencatat pool (dipanggil oleh Spawner saat spawn)
-    public void SetPool(IObjectPool<GameObject> pool)
-    {
-        myPool = pool;
-    }
-
-    // Fungsi ini dipanggil otomatis setiap kali musuh diaktifkan dari pool
+    // 1. Fungsi OnEnable disederhanakan (Murni untuk reset nyawa saat objek lahir)
     void OnEnable()
     {
         currentHealth = maxHealth;
-        if (spriteRenderer != null)
-        {
-            spriteRenderer.color = originalColor; // Reset warna ke asli
-        }
     }
 
     void Start()
     {
-        if (spriteRenderer != null && originalColor == Color.clear)
+        if (spriteRenderer != null)
         {
-            originalColor = spriteRenderer.color;
+            originalColor = spriteRenderer.color; // Catat warna asli dari Sprite asli di Inspector
         }
     }
 
@@ -52,6 +39,8 @@ public class EnemyHealth : MonoBehaviour
 
         if (spriteRenderer != null)
         {
+            // Stop coroutine yang sedang berjalan agar efek flash tidak tumpang tindih kalau ditembak cepat
+            StopAllCoroutines();
             StartCoroutine(FlashRedRoutine());
         }
 
@@ -68,17 +57,14 @@ public class EnemyHealth : MonoBehaviour
         spriteRenderer.color = originalColor;
     }
 
+    // 2. Perbaikan Total pada Fungsi Die()
     private void Die()
     {
-        if (myPool != null)
+        if (ScoreManager.Instance != null)
         {
-            // Kembalikan ke pool (Nonaktifkan), JANGAN di-Destroy
-            myPool.Release(gameObject);
+            ScoreManager.Instance.AddScore(1); // Memberikan 100 poin tiap musuh mati
         }
-        else
-        {
-            // Jaga-jaga kalau dipasang manual tanpa spawner
-            Destroy(gameObject);
-        }
+
+        Destroy(gameObject);
     }
 }
