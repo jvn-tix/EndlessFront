@@ -51,4 +51,19 @@ public class ScoreManager : MonoBehaviour
         currentScore = 0;
         UpdateScoreUI();
     }
+
+    public void CheckandSaveHighScore()
+    {
+        int highScore = PlayerPrefs.GetInt("HighScore", 0);
+        if (currentScore > highScore)
+        {
+            PlayerPrefs.SetInt("HighScore", currentScore);
+            PlayerPrefs.Save();
+        }
+    }
+
+    public int GetHighScore()
+    {
+        return PlayerPrefs.GetInt("HighScore", 0);
+    }
 }

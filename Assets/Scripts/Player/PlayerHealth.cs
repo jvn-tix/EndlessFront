@@ -15,7 +15,7 @@ public class PlayerHealth : MonoBehaviour
     private SpriteRenderer spriteRenderer;
     private Color originalColor;
 
-    public GameObject gameOverPanel;
+    public GameOverMenu gameOverPanel;
 
     void Awake()
     {
@@ -34,7 +34,7 @@ public class PlayerHealth : MonoBehaviour
 
         if(gameOverPanel != null)
         {
-            gameOverPanel.SetActive(false);
+            gameOverPanel.gameObject.SetActive(false);
         }
     }
 
@@ -67,7 +67,8 @@ public class PlayerHealth : MonoBehaviour
     {
         if(gameOverPanel != null)
         {
-            gameOverPanel.SetActive(true);
+            gameOverPanel.gameObject.SetActive(true);
+            gameOverPanel.ShowGameOverUI();
         }
 
         Time.timeScale = 0f;

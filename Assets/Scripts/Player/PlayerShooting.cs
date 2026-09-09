@@ -65,6 +65,8 @@ public class PlayerShooting : MonoBehaviour
 
     public void OnShoot(InputAction.CallbackContext context)
     {
+        if(PauseMenu.isPaused) return; 
+
         if (context.started)
         {
             if (shootCoroutine == null) shootCoroutine = StartCoroutine(FireRoutine());
