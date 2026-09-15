@@ -6,9 +6,13 @@ public class AudioManager : MonoBehaviour
 
     [Header("Audio Source")]
     [SerializeField] private AudioSource sfxSource;
+    [SerializeField] private AudioSource bgmSource;
 
     [Header("SFX Audio Clips")]
     public AudioClip shootSfx;
+
+    [Header("BGM Audio Clips")]
+    public AudioClip homeMenuBGM;
 
     private void Awake()
     {
@@ -23,6 +27,12 @@ public class AudioManager : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+        // Mulai memutar BGM saat game dimulai
+        PlayBGM(homeMenuBGM);
+    }
+
     // Fungsi serbaguna untuk memutar efek suara sekali jalan
     public void PlaySFX(AudioClip clip)
     {
@@ -31,4 +41,26 @@ public class AudioManager : MonoBehaviour
             sfxSource.PlayOneShot(clip);
         }
     }
+
+    public void PlayBGM(AudioClip clip)
+    {
+        if (clip == null || bgmSource == null) return;
+        
+            if(bgmSource.clip == clip && bgmSource.isPlaying) return;
+
+            bgmSource.clip = clip;
+            bgmSource.loop = true;
+            bgmSource.Play();
+     }
+
+    public void StopBGM()
+    {
+        if (bgmSource != null && bgmSource.isPlaying)
+        {
+            bgmSource.Stop();
+            bgmSource.clip = null;
+        }
+    }   
 }
+
+   
