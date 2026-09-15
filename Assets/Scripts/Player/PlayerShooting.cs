@@ -130,5 +130,10 @@ public class PlayerShooting : MonoBehaviour
         {
             rb.linearVelocity = firePoint.right * bulletSpeed;
         }
+
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.PlaySFX(AudioManager.Instance.shootSfx);
+        }
     }
 }
