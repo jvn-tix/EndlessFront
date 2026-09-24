@@ -14,12 +14,11 @@ public class PlayerShooting : MonoBehaviour
     public float fireRate = 0.15f;
 
     private Coroutine shootCoroutine;
-    private IObjectPool<GameObject> bulletPool; // Variabel penampung pool
+    private IObjectPool<GameObject> bulletPool;
     private Animator animator;
 
     void Awake()
     {
-        // Inisialisasi Object Pool saat game pertama kali dimuat
         bulletPool = new ObjectPool<GameObject>(
             createFunc: CreateBullet,          // Fungsi jika pool kekurangan objek dan harus membuat baru
             actionOnGet: OnTakeBulletFromPool, // Fungsi saat peluru diambil dari pool
@@ -109,6 +108,7 @@ public class PlayerShooting : MonoBehaviour
             Debug.Log("Triggering shoot animation");
             animator.SetTrigger("shoot");
         }
+        
 
         PlayerMovement playerMovement = GetComponent<PlayerMovement>();
         float facingDirection = 1f;
@@ -116,12 +116,12 @@ public class PlayerShooting : MonoBehaviour
         {
             facingDirection = playerMovement.isFacingRight ? 1f : -1f;
         }
-        // Ambil peluru dari pool (bukan Instantiate baru)
+        
         GameObject bullet = bulletPool.Get();
 
         Vector3 spawnPosition = new Vector3(transform.position.x, transform.position.y + 0.2f, transform.position.z);
 
-        // Pindahkan posisi dan rotasinya ke laras senjata
+        
         bullet.transform.position = spawnPosition;
         bullet.transform.rotation = Quaternion.identity;
 

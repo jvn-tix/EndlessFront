@@ -68,6 +68,8 @@ public class BulletProjectile : MonoBehaviour
                 if (enemy != null)
                 {
                     enemy.TakeDamage(1);
+                    Vector2 hitDirection = transform.right;
+                    enemy.ApplyKnockback(hitDirection);
                 }
                 ResetAndRelease();
                 return; // Langsung keluar fungsi jika sudah rilis

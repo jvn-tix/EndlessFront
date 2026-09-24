@@ -6650,6 +6650,7 @@ GameObject:
   - component: {fileID: 1607161702}
   - component: {fileID: 1607161701}
   - component: {fileID: 1607161700}
+  - component: {fileID: 1607161703}
   m_Layer: 0
   m_Name: CameraShake
   m_TagString: Untagged
@@ -6737,6 +6738,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1607161703
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1607161699}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0af4a25e4e504704292e1d5bcf325b3f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HitStop
 --- !u!1 &1812764098
 GameObject:
   m_ObjectHideFlags: 0

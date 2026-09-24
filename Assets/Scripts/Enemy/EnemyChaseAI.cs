@@ -9,11 +9,13 @@ public class EnemyChaseAI : MonoBehaviour
     private Transform playerTransform;
     private Rigidbody2D rb;
     private Animator animator;
+    private EnemyHealth enemyHealth;
 
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+        enemyHealth = GetComponent<EnemyHealth>();
     }
 
     void Start()
@@ -29,7 +31,8 @@ public class EnemyChaseAI : MonoBehaviour
     {
         if (playerTransform == null || rb == null) return;
 
-        // Hitung jarak ke Player
+        if (enemyHealth != null && enemyHealth.isKnockback) return;
+
         float distanceToPlayer = Vector2.Distance(transform.position, playerTransform.position);
         Vector2 direction = (playerTransform.position - transform.position).normalized;
 

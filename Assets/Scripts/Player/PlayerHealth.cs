@@ -55,6 +55,11 @@ public class PlayerHealth : MonoBehaviour
             PlayerDie();
         }
 
+        if(HitStop.Instance != null)
+        {
+            HitStop.Instance.Freeze(0.06f);
+        }
+
         if (CameraShake.Instance != null)
         {
             CameraShake.Instance.Shake(1.5f);

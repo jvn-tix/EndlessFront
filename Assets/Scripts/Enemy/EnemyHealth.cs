@@ -12,24 +12,32 @@ public class EnemyHealth : MonoBehaviour
     public Color hitColor = Color.red;
     public float flashDuration = 0.15f;
     private SpriteRenderer spriteRenderer;
-    private Color originalColor = Color.white; // Ganti default ke White agar warna asli sprite tidak berubah di awal
+    private Color originalColor = Color.white;
+    [Header("Knockback Settings")]
+    public float knockbackForce = 5f;
+    public float knockbackDuration = 0.1f;
+
+    [HideInInspector]public bool isKnockback;
+    [SerializeField] private GameObject explosionVfx;
+    private Rigidbody2D rb;
 
     void Awake()
     {
         spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+        rb = GetComponent<Rigidbody2D>();
     }
 
-    // 1. Fungsi OnEnable disederhanakan (Murni untuk reset nyawa saat objek lahir)
     void OnEnable()
     {
         currentHealth = maxHealth;
+        isKnockback = false;
     }
 
     void Start()
     {
         if (spriteRenderer != null)
         {
-            originalColor = spriteRenderer.color; // Catat warna asli dari Sprite asli di Inspector
+            originalColor = spriteRenderer.color;
         }
     }
 
@@ -39,7 +47,6 @@ public class EnemyHealth : MonoBehaviour
 
         if (spriteRenderer != null)
         {
-            // Stop coroutine yang sedang berjalan agar efek flash tidak tumpang tindih kalau ditembak cepat
             StopAllCoroutines();
             StartCoroutine(FlashRedRoutine());
         }
@@ -48,6 +55,25 @@ public class EnemyHealth : MonoBehaviour
         {
             Die();
         }
+    }
+
+    public void ApplyKnockback(Vector2 hitDirection)
+    {
+        if (rb == null || isKnockback) return;
+        StartCoroutine(KnockbackRoutine(hitDirection));
+    }
+
+    private IEnumerator KnockbackRoutine(Vector2 hitDirection)
+    {
+        isKnockback = true;
+
+        // Beri dorongan searah laju peluru
+        rb.linearVelocity = Vector2.zero;
+        rb.AddForce(hitDirection.normalized * knockbackForce, ForceMode2D.Impulse);
+
+        yield return new WaitForSeconds(knockbackDuration);
+
+        isKnockback = false;
     }
 
     private IEnumerator FlashRedRoutine()
@@ -62,7 +88,17 @@ public class EnemyHealth : MonoBehaviour
     {
         if (ScoreManager.Instance != null)
         {
-            ScoreManager.Instance.AddScore(1); // Memberikan 100 poin tiap musuh mati
+            ScoreManager.Instance.AddScore(1); 
+        }
+
+        if(HitStop.Instance != null)
+        {
+            HitStop.Instance.Freeze(0.04f);
+        }
+
+        if (explosionVfx != null)
+        {
+            Instantiate(explosionVfx, transform.position, Quaternion.identity);
         }
 
         Destroy(gameObject);

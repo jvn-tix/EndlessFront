@@ -225,6 +225,7 @@ MonoBehaviour:
   maxHealth: 3
   hitColor: {r: 1, g: 0, b: 0, a: 1}
   flashDuration: 0.15
+  explosionVfx: {fileID: 4344936885522976328, guid: f163d7745efea4b489885d7cb249acc3, type: 3}
 --- !u!114 &403962215985641316
 MonoBehaviour:
   m_ObjectHideFlags: 0

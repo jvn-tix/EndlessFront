@@ -19,7 +19,7 @@ public class AudioManager : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject); // Agar suara tidak mati saat ganti scene
+            DontDestroyOnLoad(gameObject);
         }
         else
         {
@@ -38,6 +38,7 @@ public class AudioManager : MonoBehaviour
     {
         if (clip != null && sfxSource != null)
         {
+            sfxSource.pitch = Random.Range(0.9f, 1.1f);
             sfxSource.PlayOneShot(clip);
         }
     }
@@ -62,5 +63,3 @@ public class AudioManager : MonoBehaviour
         }
     }   
 }
-
-   
