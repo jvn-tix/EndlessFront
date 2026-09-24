@@ -135,5 +135,10 @@ public class PlayerShooting : MonoBehaviour
         {
             AudioManager.Instance.PlaySFX(AudioManager.Instance.shootSfx);
         }
+
+        if (CameraShake.Instance != null)
+        {
+            CameraShake.Instance.Shake(0.2f);
+        }
     }
 }

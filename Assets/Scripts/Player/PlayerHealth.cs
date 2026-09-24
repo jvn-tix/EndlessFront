@@ -54,6 +54,11 @@ public class PlayerHealth : MonoBehaviour
         {
             PlayerDie();
         }
+
+        if (CameraShake.Instance != null)
+        {
+            CameraShake.Instance.Shake(1.5f);
+        }
     }
 
     private IEnumerator FlashRedRoutine()
