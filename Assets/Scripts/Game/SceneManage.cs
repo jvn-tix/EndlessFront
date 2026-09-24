@@ -9,7 +9,7 @@ public class SceneManage : MonoBehaviour
     [SerializeField] private CanvasGroup loadingCanvasGroup;
     [SerializeField] private Slider progressBar;
     [SerializeField] private float fadeSpeed = 3f;
-    [SerializeField] private float progressSpeed = 2f; // Kecepatan animasi progress bar
+    [SerializeField] private float progressSpeed = 2f; 
 
     public void OnStartClick()
     {

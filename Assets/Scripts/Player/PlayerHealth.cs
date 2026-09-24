@@ -15,7 +15,7 @@ public class PlayerHealth : MonoBehaviour
     private SpriteRenderer spriteRenderer;
     private Color originalColor;
 
-    public GameOverMenu gameOverPanel;
+    public GameplayMenuUI gameplayMenu;
 
     void Awake()
     {
@@ -26,15 +26,15 @@ public class PlayerHealth : MonoBehaviour
     void Start()
     {
         currentHealth = maxHealth;
-        healthUI.setMaxHearts(maxHealth);
+
+        if(healthUI != null)
+        {
+            healthUI.setMaxHearts(maxHealth);
+        }
+        
         if (spriteRenderer != null)
         {
             originalColor = spriteRenderer.color;
-        }
-
-        if(gameOverPanel != null)
-        {
-            gameOverPanel.gameObject.SetActive(false);
         }
     }
 
@@ -75,10 +75,9 @@ public class PlayerHealth : MonoBehaviour
 
     private void PlayerDie()
     {
-        if(gameOverPanel != null)
+        if(gameplayMenu != null)
         {
-            gameOverPanel.gameObject.SetActive(true);
-            gameOverPanel.ShowGameOverUI();
+            gameplayMenu.ShowGameOverUI();
         }
 
         Time.timeScale = 0f;

@@ -64,7 +64,7 @@ public class PlayerShooting : MonoBehaviour
 
     public void OnShoot(InputAction.CallbackContext context)
     {
-        if(PauseMenu.isPaused) return; 
+        if(GameplayMenuUI.isPaused) return; 
 
         if (context.started)
         {
