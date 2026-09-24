@@ -20,17 +20,24 @@ public class EnemyHealth : MonoBehaviour
     [HideInInspector]public bool isKnockback;
     [SerializeField] private GameObject explosionVfx;
     private Rigidbody2D rb;
+    private EnemyHealthBar healthBar;
 
     void Awake()
     {
         spriteRenderer = GetComponentInChildren<SpriteRenderer>();
         rb = GetComponent<Rigidbody2D>();
+        healthBar = GetComponent<EnemyHealthBar>();
     }
 
     void OnEnable()
     {
         currentHealth = maxHealth;
         isKnockback = false;
+
+        if (healthBar != null)
+        {
+            healthBar.UpdateHealthBar(currentHealth, maxHealth);
+        }
     }
 
     void Start()
@@ -44,6 +51,11 @@ public class EnemyHealth : MonoBehaviour
     public void TakeDamage(int damage)
     {
         currentHealth -= damage;
+
+        if (healthBar != null)
+        {
+            healthBar.UpdateHealthBar(currentHealth, maxHealth);
+        }
 
         if (spriteRenderer != null)
         {
