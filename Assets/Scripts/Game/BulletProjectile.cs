@@ -16,10 +16,13 @@ public class BulletProjectile : MonoBehaviour
     public Color playerBulletColor = Color.yellow;
     public Color enemyBulletColor = Color.red;
 
+    private TrailRenderer trailRenderer;
+
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
+        trailRenderer = GetComponent<TrailRenderer>();
     }
 
     public void SetPool(IObjectPool<GameObject> bulletPool)
@@ -32,6 +35,11 @@ public class BulletProjectile : MonoBehaviour
         timer = lifetime;
         isReleased = false; // Reset status setiap kali peluru keluar dari pool
         Invoke(nameof(SetupVisual), 0.01f);
+
+        if(trailRenderer != null)
+        {
+            trailRenderer.Clear();
+        }
     }
 
     private void SetupVisual()
@@ -105,7 +113,11 @@ public class BulletProjectile : MonoBehaviour
 
         CancelInvoke(); // Batalkan Invoke warna
 
-        // Kembalikan Tag peluru ke default sebelum masuk pool
+        if(trailRenderer != null)
+        {
+            trailRenderer.Clear();
+        }
+
         gameObject.tag = "Bullet";
 
         if (rb != null) rb.linearVelocity = Vector2.zero;
