@@ -3,6 +3,8 @@ using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
+    [Header("Walk Effects")]
+    public ParticleSystem dustParticle;
     public float moveSpeed = 8f;
     public float jumpForce = 12f;
 
@@ -22,6 +24,11 @@ public class PlayerMovement : MonoBehaviour
     public void OnMove(InputAction.CallbackContext context)
     {
         movementDirection = context.ReadValue<Vector2>();
+        
+        if(context.started && isGrounded && movementDirection.x != 0)
+        {
+            PlayDust();
+        }
     }
 
     public void OnJump(InputAction.CallbackContext context)
@@ -31,6 +38,8 @@ public class PlayerMovement : MonoBehaviour
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
             isGrounded = false;
             animator.SetBool("isJumping", !isGrounded);
+
+            PlayDust();
         }
     }
 
@@ -63,6 +72,19 @@ public class PlayerMovement : MonoBehaviour
         Vector3 currentScale = transform.localScale;
         currentScale.x *= -1;
         transform.localScale = currentScale;
+
+        if(isGrounded)
+        {
+            PlayDust();
+        }
+    }
+
+    public void PlayDust()
+    {
+        if (dustParticle != null)
+        {
+            dustParticle.Play();
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -71,6 +93,8 @@ public class PlayerMovement : MonoBehaviour
         {
             isGrounded = true;
             animator.SetBool("isJumping", !isGrounded);
+
+            PlayDust();
         }
     }
 }
