@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.Pool; // Wajib ditambahkan untuk menggunakan Object Pool bawaan Unity
+using UnityEngine.Pool;
 
 public class PlayerShooting : MonoBehaviour
 {

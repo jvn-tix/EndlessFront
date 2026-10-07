@@ -64,10 +64,13 @@ public class EnemyShooterAI : MonoBehaviour
                 float directionSign = Mathf.Sign(transform.localScale.x);
                 rbBullet.linearVelocity = new Vector2(directionSign * bulletSpeed, 0f);
 
-                // SINKRONISASI TRIGGER: Panggil parameter "isShooting" saat peluru keluar
                 if (animator != null)
                 {
                     animator.SetTrigger("shoot");
+                }
+                if(AudioManager.Instance != null)
+                {
+                    AudioManager.Instance.PlaySFX(AudioManager.Instance.shootSfx);
                 }
             }
         }
