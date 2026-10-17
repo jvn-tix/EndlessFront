@@ -76,7 +76,7 @@ public class PlayerShooting : MonoBehaviour
             return bulletPool.Get();
         }
         return null;
-    }
+    }   
 
     public void OnShoot(InputAction.CallbackContext context)
     {
