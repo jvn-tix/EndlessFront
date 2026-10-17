@@ -1326,7 +1326,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemySpawner
   enemyPrefab: {fileID: 6305619841186351090, guid: d8c59e54e4adc8c47bd0779bc9c79945, type: 3}
-  spawnInterval: 3
+  spawnInterval: 1.5
   spawnPoints:
   - {fileID: 1953769289}
   - {fileID: 2134075138}
@@ -2608,7 +2608,8 @@ GameObject:
   - component: {fileID: 930718761}
   - component: {fileID: 930718763}
   - component: {fileID: 930718764}
-  m_Layer: 0
+  - component: {fileID: 930718765}
+  m_Layer: 3
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -2751,7 +2752,7 @@ Transform:
   m_LocalScale: {x: 4, y: 4, z: 3}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1153147167}
+  - {fileID: 1969454146}
   - {fileID: 1781755387}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2818,7 +2819,7 @@ MonoBehaviour:
     m_ActionName: 'Player/Look[/Mouse/delta]'
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1153147168}
+      - m_Target: {fileID: 930718765}
         m_TargetAssemblyTypeName: PlayerShooting, Assembly-CSharp
         m_MethodName: OnShoot
         m_Mode: 0
@@ -2952,6 +2953,22 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &930718765
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 930718756}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5229a58c1d7304409fdc7d56a149255, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerShooting
+  bulletPrefab: {fileID: 8632914595468376361, guid: 6bb8044769158e146a341ba3dd865b3a, type: 3}
+  firePoint: {fileID: 1969454146}
+  bulletSpeed: 20
+  fireRate: 0.15
 --- !u!1 &989133310
 GameObject:
   m_ObjectHideFlags: 0
@@ -3031,68 +3048,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 989133310}
   m_CullTransparentMesh: 1
---- !u!1 &1153147166
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1153147167}
-  - component: {fileID: 1153147168}
-  - component: {fileID: 1153147169}
-  m_Layer: 0
-  m_Name: GunPivot
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1153147167
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1153147166}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.26, y: -0.07, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1969454146}
-  m_Father: {fileID: 930718760}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1153147168
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1153147166}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e5229a58c1d7304409fdc7d56a149255, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Weapon
-  bulletPrefab: {fileID: 8632914595468376361, guid: 6bb8044769158e146a341ba3dd865b3a, type: 3}
-  firePoint: {fileID: 1969454146}
-  bulletSpeed: 20
-  fireRate: 0.15
---- !u!114 &1153147169
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1153147166}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6f874bffce372a64b87a4fc390281c17, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerSight
 --- !u!1 &1267226672
 GameObject:
   m_ObjectHideFlags: 0
@@ -7068,7 +7023,7 @@ GameObject:
   - component: {fileID: 1781755387}
   - component: {fileID: 1781755386}
   - component: {fileID: 1781755385}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: DustParticle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13085,12 +13040,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1969454145}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.162, y: 0.146, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.152, y: 0.068, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1153147167}
+  m_Father: {fileID: 930718760}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2052541680
 GameObject:

@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 6733160438957093171}
   - component: {fileID: 6293940860791928222}
   - component: {fileID: -4059957219724808500}
+  - component: {fileID: 5477796342785240722}
   m_Layer: 0
   m_Name: Bullet
   m_TagString: Bullet
@@ -85,7 +86,7 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: 7679142085136436821, guid: f5abeb9e0f5a3bc40921ff3c31c00192, type: 3}
-  m_Color: {r: 0.9488498, g: 1, b: 0, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -276,3 +277,18 @@ TrailRenderer:
   m_Autodestruct: 0
   m_Emitting: 1
   m_ApplyActiveColorSpace: 1
+--- !u!114 &5477796342785240722
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8632914595468376361}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0939d58e38b11a49bd1c1e5bb080c69, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BulletProjectile
+  playerBulletColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  enemyBulletColor: {r: 1, g: 0, b: 0, a: 1}
+  hitImpact: {fileID: 7324336041940284759, guid: a9bba8404267ec647a8750c33aba3fd0, type: 3}

@@ -20,13 +20,13 @@ public class PlayerShooting : MonoBehaviour
     void Awake()
     {
         bulletPool = new ObjectPool<GameObject>(
-            createFunc: CreateBullet,          // Fungsi jika pool kekurangan objek dan harus membuat baru
-            actionOnGet: OnTakeBulletFromPool, // Fungsi saat peluru diambil dari pool
-            actionOnRelease: OnReturnBulletToPool, // Fungsi saat peluru dikembalikan ke pool
-            actionOnDestroy: OnDestroyPoolObject,  // Fungsi jika objek dihancurkan permanen
+            createFunc: CreateBullet,
+            actionOnGet: OnTakeBulletFromPool,
+            actionOnRelease: OnReturnBulletToPool,
+            actionOnDestroy: OnDestroyPoolObject,
             collectionCheck: true,
-            defaultCapacity: 20,               // Kapasitas awal pool
-            maxSize: 50                        // Batas maksimum objek di dalam pool
+            defaultCapacity: 20,
+            maxSize: 50
         );
     }
 
@@ -38,33 +38,49 @@ public class PlayerShooting : MonoBehaviour
     private GameObject CreateBullet()
     {
         GameObject bullet = Instantiate(bulletPrefab);
-        // Kita beri skrip perantara pada peluru agar dia tahu cara kembali ke pool sendiri
-        BulletProjectile bulletScript = bullet.AddComponent<BulletProjectile>();
+
+        BulletProjectile bulletScript = bullet.GetComponent<BulletProjectile>();
+        if (bulletScript == null)
+        {
+            bulletScript = bullet.AddComponent<BulletProjectile>();
+        }
+
         bulletScript.SetPool(bulletPool);
         return bullet;
     }
 
-    // 2. Fungsi saat peluru diaktifkan kembali
     private void OnTakeBulletFromPool(GameObject bullet)
     {
+        if (bullet == null) return;
         bullet.SetActive(true);
     }
 
-    // 3. Fungsi saat peluru dinonaktifkan (kembali masuk kotak pool)
     private void OnReturnBulletToPool(GameObject bullet)
     {
+        if (bullet == null) return;
         bullet.SetActive(false);
     }
 
-    // 4. Fungsi pembersihan memori jika melebihi maxSize
     private void OnDestroyPoolObject(GameObject bullet)
     {
-        Destroy(bullet);
+        if (bullet != null)
+        {
+            Destroy(bullet);
+        }
+    }
+
+    public GameObject GetBulletFromPool()
+    {
+        if (bulletPool != null)
+        {
+            return bulletPool.Get();
+        }
+        return null;
     }
 
     public void OnShoot(InputAction.CallbackContext context)
     {
-        if(GameplayMenuUI.isPaused) return; 
+        if (GameplayMenuUI.isPaused) return;
 
         if (context.started)
         {
@@ -80,16 +96,6 @@ public class PlayerShooting : MonoBehaviour
         }
     }
 
-    // Pastikan ada kata 'public' di depannya!
-    public GameObject GetBulletFromPool()
-    {
-        // Sesuaikan 'bulletPool' dengan nama variabel IObjectPool yang kamu buat di skrip ini
-        if (bulletPool != null)
-        {
-            return bulletPool.Get();
-        }
-        return null;
-    }
     private IEnumerator FireRoutine()
     {
         while (true)
@@ -103,32 +109,37 @@ public class PlayerShooting : MonoBehaviour
     {
         if (bulletPrefab == null) return;
 
-        if(animator != null)
-        {   
-            Debug.Log("Triggering shoot animation");
+        if (animator != null)
+        {
             animator.SetTrigger("shoot");
         }
-        
 
-        PlayerMovement playerMovement = GetComponent<PlayerMovement>();
-        float facingDirection = 1f;
-        if(playerMovement != null)
-        {
-            facingDirection = playerMovement.isFacingRight ? 1f : -1f;
-        }
-        
         GameObject bullet = bulletPool.Get();
+        if (bullet == null) return;
 
-        Vector3 spawnPosition = new Vector3(transform.position.x, transform.position.y + 0.2f, transform.position.z);
+        // 1. Ambil arah hadap langsung dari PlayerMovement
+        PlayerMovement playerMovement = GetComponentInParent<PlayerMovement>();
+        if (playerMovement == null) playerMovement = GetComponent<PlayerMovement>();
 
-        
+        float directionX = (playerMovement != null && !playerMovement.isFacingRight) ? -1f : 1f;
+
+        // 2. Ambil posisi spawn dari firePoint
+        Vector3 spawnPosition = (firePoint != null)
+            ? firePoint.position
+            : new Vector3(transform.position.x + (directionX * 0.5f), transform.position.y + 0.2f, transform.position.z);
+
+        bullet.transform.SetParent(null);
         bullet.transform.position = spawnPosition;
-        bullet.transform.rotation = Quaternion.identity;
 
+        // Putar visual peluru jika menghadap kiri
+        float angle = (directionX < 0) ? 180f : 0f;
+        bullet.transform.rotation = Quaternion.Euler(0f, 0f, angle);
+
+        // 3. Set velocity peluru lurus horizontal saja
         Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
         if (rb != null)
         {
-            rb.linearVelocity = firePoint.right * bulletSpeed;
+            rb.linearVelocity = new Vector2(directionX * bulletSpeed, 0f);
         }
 
         if (AudioManager.Instance != null)

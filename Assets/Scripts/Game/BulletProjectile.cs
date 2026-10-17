@@ -16,6 +16,8 @@ public class BulletProjectile : MonoBehaviour
     public Color playerBulletColor = Color.yellow;
     public Color enemyBulletColor = Color.red;
 
+    [Header("Hit Impact")]
+    [SerializeField] private GameObject hitImpact;
     private TrailRenderer trailRenderer;
 
     void Awake()
@@ -72,7 +74,10 @@ public class BulletProjectile : MonoBehaviour
         {
             if (collision.CompareTag("Enemy"))
             {
+                SpawnHitImpact();
+
                 EnemyHealth enemy = collision.GetComponent<EnemyHealth>();
+
                 if (enemy != null)
                 {
                     enemy.TakeDamage(1);
@@ -88,6 +93,8 @@ public class BulletProjectile : MonoBehaviour
         {
             if (collision.CompareTag("Player"))
             {
+                SpawnHitImpact();
+
                 PlayerHealth playerHealth = collision.GetComponent<PlayerHealth>();
                 if (playerHealth != null)
                 {
@@ -101,7 +108,17 @@ public class BulletProjectile : MonoBehaviour
         // 3. LOGIKA JIKA MENABRAK TANAH/DINDING (Gunakan 'else if' atau amankan dengan return di atas)
         if (collision.CompareTag("Ground"))
         {
+            SpawnHitImpact();
             ResetAndRelease();
+        }
+    }
+
+    private void SpawnHitImpact()
+    {
+        if (hitImpact != null)
+        {
+            GameObject impact = Instantiate(hitImpact, transform.position, Quaternion.identity);
+            Destroy(impact, 0.5f);
         }
     }
 
