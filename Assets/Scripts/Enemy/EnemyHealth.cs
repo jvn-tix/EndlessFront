@@ -22,6 +22,8 @@ public class EnemyHealth : MonoBehaviour
     private Rigidbody2D rb;
     private EnemyHealthBar healthBar;
 
+    [SerializeField] private GameObject damagePopup;
+
     void Awake()
     {
         spriteRenderer = GetComponentInChildren<SpriteRenderer>();
@@ -51,6 +53,18 @@ public class EnemyHealth : MonoBehaviour
     public void TakeDamage(int damage)
     {
         currentHealth -= damage;
+
+        if(damagePopup != null)
+        {
+            Vector3 spawnPos = transform.position + new Vector3(Random.Range(-0.2f, 0.2f), 0.5f, 0);
+            GameObject popup = Instantiate(damagePopup, spawnPos, Quaternion.identity);
+            DamagePopup popupCom = popup.GetComponent<DamagePopup>();
+
+            if (popupCom != null)
+            {
+                popupCom.Setup(damage);
+            }
+        }
 
         if (healthBar != null)
         {

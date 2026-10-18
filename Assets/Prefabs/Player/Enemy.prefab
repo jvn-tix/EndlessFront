@@ -478,6 +478,7 @@ MonoBehaviour:
   knockbackDuration: 0.1
   isKnockback: 0
   explosionVfx: {fileID: 4344936885522976328, guid: f163d7745efea4b489885d7cb249acc3, type: 3}
+  damagePopup: {fileID: 2867442887901441589, guid: 313af3d17831fc14e919927bb0e53c80, type: 3}
 --- !u!114 &403962215985641316
 MonoBehaviour:
   m_ObjectHideFlags: 0
