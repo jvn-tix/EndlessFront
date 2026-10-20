@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.Pool;
 
@@ -35,12 +36,24 @@ public class BulletProjectile : MonoBehaviour
     void OnEnable()
     {
         timer = lifetime;
-        isReleased = false; // Reset status setiap kali peluru keluar dari pool
-        Invoke(nameof(SetupVisual), 0.01f);
+        isReleased = false;
 
-        if(trailRenderer != null)
+        if (trailRenderer != null)
         {
+            trailRenderer.emitting = false;
             trailRenderer.Clear();
+            StartCoroutine(EnableTrailRoutine());
+        }
+
+        Invoke(nameof(SetupVisual), 0.01f);
+    }
+
+    private IEnumerator EnableTrailRoutine()
+    {
+        yield return null; 
+        if (trailRenderer != null)
+        {
+            trailRenderer.emitting = true;
         }
     }
 
@@ -85,7 +98,7 @@ public class BulletProjectile : MonoBehaviour
                     enemy.ApplyKnockback(hitDirection);
                 }
                 ResetAndRelease();
-                return; // Langsung keluar fungsi jika sudah rilis
+                return; 
             }
         }
         // 2. LOGIKA JIKA INI PELURU MUSUH
@@ -101,7 +114,7 @@ public class BulletProjectile : MonoBehaviour
                     playerHealth.PlayerTakeDamage(1);
                 }
                 ResetAndRelease();
-                return; // Langsung keluar fungsi jika sudah rilis
+                return; 
             }
         }
 
