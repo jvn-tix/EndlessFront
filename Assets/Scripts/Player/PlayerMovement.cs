@@ -5,6 +5,9 @@ public class PlayerMovement : MonoBehaviour
 {
     [Header("Walk Effects")]
     public ParticleSystem dustParticle;
+    private float dustTimer;
+    public float dustInterval = 0.2f;
+
     public float moveSpeed = 8f;
     public float jumpForce = 12f;
 
@@ -24,11 +27,6 @@ public class PlayerMovement : MonoBehaviour
     public void OnMove(InputAction.CallbackContext context)
     {
         movementDirection = context.ReadValue<Vector2>();
-        
-        if(context.started && isGrounded && movementDirection.x != 0)
-        {
-            PlayDust();
-        }
     }
 
     public void OnJump(InputAction.CallbackContext context)
@@ -48,6 +46,20 @@ public class PlayerMovement : MonoBehaviour
         rb.linearVelocity = new Vector2(movementDirection.x * moveSpeed, rb.linearVelocity.y);
 
         HandleFlip();
+
+        if (isGrounded && Mathf.Abs(rb.linearVelocity.x) > 0.1f)
+        {
+            dustTimer -= Time.fixedDeltaTime;
+            if (dustTimer <= 0f)
+            {
+                PlayDust();
+                dustTimer = dustInterval; 
+            }
+        }
+        else
+        {
+            dustTimer = 0f;
+        }
 
         animator.SetFloat("xVelocity", Mathf.Abs(rb.linearVelocity.x));
         animator.SetFloat("yVelocity", rb.linearVelocity.y);
