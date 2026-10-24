@@ -111,6 +111,19 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
@@ -998,10 +1011,10 @@ TextureImporter:
       name: tiles_out_40
       rect:
         serializedVersion: 2
-        x: 160
-        y: 336
-        width: 16
-        height: 16
+        x: 161
+        y: 304
+        width: 46
+        height: 45
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1012,50 +1025,6 @@ TextureImporter:
       bones: []
       spriteID: efc4dadd8e4905d499a5799e1943465d
       internalID: 2040071282
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: tiles_out_41
-      rect:
-        serializedVersion: 2
-        x: 176
-        y: 336
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 6ef498447aa9a034f8d5d80118c75d68
-      internalID: 886948019
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: tiles_out_42
-      rect:
-        serializedVersion: 2
-        x: 192
-        y: 336
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 0c254a29da89fc6449bdd58c3d2831ff
-      internalID: 1527462058
       vertices: []
       indices: 
       edges: []
@@ -1232,28 +1201,6 @@ TextureImporter:
       bones: []
       spriteID: 1ebf54f57d3743946ae038f56bd9a6d4
       internalID: -1023411982
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: tiles_out_51
-      rect:
-        serializedVersion: 2
-        x: 176
-        y: 320
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 73a627e3b5137124dacd548f0dc2edf2
-      internalID: 1384750857
       vertices: []
       indices: 
       edges: []
@@ -1452,28 +1399,6 @@ TextureImporter:
       bones: []
       spriteID: 0cf2c244a5abe144a94b7a8af7ce1fa4
       internalID: -836645929
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: tiles_out_61
-      rect:
-        serializedVersion: 2
-        x: 176
-        y: 304
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 2b887376ef7d5d04aad93cffac6fb74c
-      internalID: 2060686780
       vertices: []
       indices: 
       edges: []
@@ -4668,6 +4593,28 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: tiles_out_207
+      rect:
+        serializedVersion: 2
+        x: 175
+        y: 279
+        width: 3
+        height: 5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 80a26a6cbbb56b847a966cd13884851d
+      internalID: -1476021037
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     customData: 
     physicsShape: []
@@ -4805,6 +4752,7 @@ TextureImporter:
       tiles_out_204: 735967783
       tiles_out_205: 1389045897
       tiles_out_206: 1083883149
+      tiles_out_207: -1476021037
       tiles_out_21: -1007727930
       tiles_out_22: -356511320
       tiles_out_23: -929123079

@@ -13,6 +13,9 @@ public class PlayerShooting : MonoBehaviour
     public float bulletSpeed = 20f;
     public float fireRate = 0.15f;
 
+    [Header("MuzzleFlash")]
+    [SerializeField] private MuzzleFlash muzzleFlash;
+
     private Coroutine shootCoroutine;
     private IObjectPool<GameObject> bulletPool;
     private Animator animator;
@@ -135,11 +138,15 @@ public class PlayerShooting : MonoBehaviour
         float angle = (directionX < 0) ? 180f : 0f;
         bullet.transform.rotation = Quaternion.Euler(0f, 0f, angle);
 
-        // 3. Set velocity peluru lurus horizontal saja
         Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
         if (rb != null)
         {
             rb.linearVelocity = new Vector2(directionX * bulletSpeed, 0f);
+        }
+
+        if (muzzleFlash != null)
+        {
+            muzzleFlash.Flash();
         }
 
         if (AudioManager.Instance != null)
