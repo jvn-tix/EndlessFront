@@ -14,7 +14,7 @@ public class EnemyChaseAI : MonoBehaviour
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
-        animator = GetComponent<Animator>();
+        animator = GetComponentInChildren<Animator>();
         enemyHealth = GetComponent<EnemyHealth>();
     }
 

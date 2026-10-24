@@ -8,11 +8,11 @@ public class EnemyHealth : MonoBehaviour
     private int currentHealth;
 
     [Header("Visual Efek Hit")]
-    public Color hitColor = Color.red;
-    public float flashDuration = 0.15f;
+    public float flashDuration = 0.08f;
     private SpriteRenderer spriteRenderer;
-    private Color originalColor = Color.white;
+    private Material mat;
     private Coroutine flashCoroutine;
+    private static readonly int FlashAmountId = Shader.PropertyToID("_FlashAmount");
 
     [Header("Knockback Settings")]
     public float knockbackForce = 5f;
@@ -24,7 +24,7 @@ public class EnemyHealth : MonoBehaviour
     private EnemyHealthBar healthBar;
 
     [SerializeField] private GameObject damagePopup;
-
+    [SerializeField] private HitSquash hitSquash;
     void Awake()
     {
         spriteRenderer = GetComponentInChildren<SpriteRenderer>();
@@ -33,7 +33,7 @@ public class EnemyHealth : MonoBehaviour
 
         if (spriteRenderer != null)
         {
-            originalColor = spriteRenderer.color;
+            mat = spriteRenderer.material;
         }
     }
 
@@ -42,9 +42,9 @@ public class EnemyHealth : MonoBehaviour
         currentHealth = maxHealth;
         isKnockback = false;
 
-        if (spriteRenderer != null)
+        if(mat != null)
         {
-            spriteRenderer.color = originalColor;
+            mat.SetFloat(FlashAmountId, 0f);
         }
 
         if (healthBar != null)
@@ -83,6 +83,11 @@ public class EnemyHealth : MonoBehaviour
             flashCoroutine = StartCoroutine(FlashRedRoutine());
         }
 
+        if (hitSquash != null)
+        {
+            hitSquash.Play();
+        }
+
         // 4. Cek Kematian
         if (currentHealth <= 0)
         {
@@ -111,9 +116,9 @@ public class EnemyHealth : MonoBehaviour
 
     private IEnumerator FlashRedRoutine()
     {
-        spriteRenderer.color = hitColor;
+       mat.SetFloat(FlashAmountId, 1f);
         yield return new WaitForSeconds(flashDuration);
-        spriteRenderer.color = originalColor;
+        mat.SetFloat(FlashAmountId, 0f);
         flashCoroutine = null;
     }
 

@@ -156,7 +156,7 @@ public class PlayerShooting : MonoBehaviour
 
         if (CameraShake.Instance != null)
         {
-            CameraShake.Instance.Shake(0.2f);
+            CameraShake.Instance.Shake(0.4f);
         }
     }
 }

@@ -25,7 +25,7 @@ public class CameraShake : MonoBehaviour
     /// <summary>
     /// Memanggil guncangan kamera menggunakan Cinemachine Impulse.
     /// </summary>
-    /// <param name="force">Kekuatan guncangan (default: 1.0f)</param>
+    /// <param name="force">Kekuatan guncangan (default: 1.5f)</param>
     public void Shake(float force = 1.0f)
     {
         if (impulseSource != null)
