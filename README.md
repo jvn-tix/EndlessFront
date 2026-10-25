@@ -16,21 +16,6 @@ Endless Front is a fast-paced action shooter where players move, aim, and shoot 
 
 **Atmospheric Visuals**: Parallax scrolling backgrounds and flickering lamps give the world depth and mood.
 
-<table>
-<tr>
-<td align="center" width="50%">
-<strong>Combat</strong><br>
-Shoot, dodge, and take down enemy waves
-<img width="100%" alt="gif1" src="PATH_TO_GIF_1">
-</td>
-<td align="center" width="50%">
-<strong>Game Feel</strong><br>
-Hit stop, screen shake, and damage popups
-<img width="100%" alt="gif2" src="PATH_TO_GIF_2">
-</td>
-</tr>
-</table>
-
 ## Scene Flow
 ```mermaid
 flowchart LR
