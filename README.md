@@ -197,88 +197,8 @@ flowchart TD
 
 <br>
 
-## Event Signal Diagram
-```mermaid
-classDiagram
-    %% --- Player Systems ---
-    class PlayerShooting {
-        +OnShoot()
-        +OnReload()
-    }
-
-    class PlayerHealth {
-        +OnHealthChanged(current: int, max: int)
-        +OnDamageTaken(amount: int)
-        +OnDeath()
-    }
-
-    class PlayerMovement {
-        +OnMove(direction: Vector2)
-        +OnJump()
-    }
-
-    %% --- Enemy Systems ---
-    class EnemySpawner {
-        +OnEnemySpawned(enemy: GameObject)
-    }
-
-    class EnemyHealth {
-        +OnHealthChanged(current: int, max: int)
-        +OnDamageTaken(amount: int)
-        +OnDeath()
-    }
-
-    class EnemyChaseAI {
-        +OnTargetReached()
-    }
-
-    class EnemyShooterAI {
-        +OnFire()
-    }
-
-    %% --- Game Systems ---
-    class BulletProjectile {
-        +OnHit(target: GameObject)
-    }
-
-    class ScoreManager {
-        +OnScoreChanged(score: int)
-    }
-
-    class HitStop {
-        +OnHitStopStart()
-        +OnHitStopEnd()
-    }
-
-    class CameraShake {
-        +OnShakeStart(intensity: float)
-    }
-
-    class SceneManage {
-        +OnSceneLoad(name: string)
-    }
-
-    %% --- Relations ---
-    PlayerShooting --> BulletProjectile : creates
-    EnemyShooterAI --> BulletProjectile : creates
-    BulletProjectile --> EnemyHealth : damages
-    BulletProjectile --> PlayerHealth : damages
-
-    EnemySpawner --> EnemyChaseAI : spawns
-    EnemySpawner --> EnemyShooterAI : spawns
-    EnemyChaseAI --> PlayerHealth : damages
-
-    EnemyHealth --> ScoreManager : adds score
-    EnemyHealth --> HitStop : triggers
-    PlayerShooting --> CameraShake : triggers
-    PlayerHealth --> CameraShake : triggers
-    PlayerHealth --> SceneManage : on death
-```
-
-<br>
-
 ## Play The Game
-<a href="YOUR_ITCH_IO_OR_GAME_LINK">Play Now</a>
+<a href="https://exaltedartix.itch.io/endless-front">Play Now</a>
 
 <br>
 
