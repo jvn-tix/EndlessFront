@@ -10,8 +10,6 @@ Endless Front is a fast-paced action shooter where players move, aim, and shoot 
 
 **Responsive Shooting System**: Aim and fire projectiles with muzzle flash feedback, bullet projectiles, and satisfying impact effects on every hit.
 
-**Smart Enemy Variety**: Face enemies with different behaviors, from melee chasers that hunt you down to shooters that keep their distance and fire back. An enemy spawner keeps the pressure on.
-
 **Game Feel & Juice**: Hit stop, camera shake, hit squash animations, and damage popups make every hit feel impactful and readable.
 
 **Atmospheric Visuals**: Parallax scrolling backgrounds and flickering lamps give the world depth and mood.
